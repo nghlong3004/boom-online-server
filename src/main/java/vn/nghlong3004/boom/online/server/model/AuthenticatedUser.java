@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class AuthenticatedUser implements UserDetails {
   private final Long id;
   private final String username;
+  private final String displayName;
   private final String password;
   private final Collection<? extends GrantedAuthority> authorities;
 
@@ -24,11 +25,7 @@ public class AuthenticatedUser implements UserDetails {
     return authorities.stream().findFirst().map(GrantedAuthority::getAuthority).orElse(null);
   }
 
-  public boolean isAdmin() {
-    return this.getAuthority().equals(Role.ADMIN.getAuthority());
-  }
-
-  public boolean isOwner(Long id) {
-    return this.getId().equals(id);
+  public Role getRole() {
+    return Role.valueOf(getAuthority().substring(5));
   }
 }

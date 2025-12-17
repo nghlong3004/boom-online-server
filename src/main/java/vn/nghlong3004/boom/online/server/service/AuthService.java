@@ -1,6 +1,5 @@
 package vn.nghlong3004.boom.online.server.service;
 
-import com.vn.nghlong3004.boomonline.server.model.request.*;
 import vn.nghlong3004.boom.online.server.model.request.*;
 import vn.nghlong3004.boom.online.server.model.response.LoginResponse;
 import vn.nghlong3004.boom.online.server.model.response.OTPResponse;
@@ -16,7 +15,7 @@ public interface AuthService {
 
   LoginResponse login(LoginRequest request);
 
-  OTPResponse forgotPassword(ForgotPasswordRequest request);
+  void forgotPassword(ForgotPasswordRequest request);
 
   OTPResponse verifyOTP(OTPRequest request);
 

@@ -18,8 +18,8 @@ public record RegisterRequest(
         @JsonFormat(pattern = "yyyy-MM-dd") // Standard JSON date format
         String birthday,
     @NotBlank(message = "Full name is required")
-        @Size(max = 30, message = "Full name must not exceed 30 characters")
-        String fullName,
+        @Size(max = 12, min = 2, message = "display name must not exceed 12 characters")
+        String displayName,
 
     // (0: Male, 1: Female, 2: Other)
     @NotNull(message = "Gender is required")

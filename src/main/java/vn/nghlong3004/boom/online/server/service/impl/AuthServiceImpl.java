@@ -1,20 +1,5 @@
 package vn.nghlong3004.boom.online.server.service.impl;
 
-import vn.nghlong3004.boom.online.server.exception.ErrorCode;
-import vn.nghlong3004.boom.online.server.exception.ResourceException;
-import vn.nghlong3004.boom.online.server.mapper.UserMapper;
-import vn.nghlong3004.boom.online.server.model.Role;
-import vn.nghlong3004.boom.online.server.model.User;
-import com.vn.nghlong3004.boomonline.server.model.request.*;
-import vn.nghlong3004.boom.online.server.model.request.*;
-import vn.nghlong3004.boom.online.server.model.response.LoginResponse;
-import vn.nghlong3004.boom.online.server.model.response.OTPResponse;
-import vn.nghlong3004.boom.online.server.repository.UserRepository;
-import vn.nghlong3004.boom.online.server.service.AuthService;
-import vn.nghlong3004.boom.online.server.service.EmailService;
-import vn.nghlong3004.boom.online.server.service.OTPService;
-import vn.nghlong3004.boom.online.server.service.TokenService;
-import vn.nghlong3004.boom.online.server.service.email.EmailType;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +12,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.nghlong3004.boom.online.server.exception.ErrorCode;
+import vn.nghlong3004.boom.online.server.exception.ResourceException;
+import vn.nghlong3004.boom.online.server.mapper.UserMapper;
+import vn.nghlong3004.boom.online.server.model.AuthenticatedUser;
+import vn.nghlong3004.boom.online.server.model.Role;
+import vn.nghlong3004.boom.online.server.model.User;
+import vn.nghlong3004.boom.online.server.model.request.*;
+import vn.nghlong3004.boom.online.server.model.response.LoginResponse;
+import vn.nghlong3004.boom.online.server.model.response.OTPResponse;
+import vn.nghlong3004.boom.online.server.repository.UserRepository;
+import vn.nghlong3004.boom.online.server.service.AuthService;
+import vn.nghlong3004.boom.online.server.service.EmailService;
+import vn.nghlong3004.boom.online.server.service.OTPService;
+import vn.nghlong3004.boom.online.server.service.TokenService;
+import vn.nghlong3004.boom.online.server.service.email.EmailType;
 
 /**
  * Project: boom-online-server
@@ -76,12 +76,23 @@ public class AuthServiceImpl implements AuthService {
     log.info("Generate Token login request for email: {}", request.email());
     String accessToken = tokenService.generateAccessToken(authentication);
     String refreshToken = tokenService.generateRefreshToken(authentication);
+    User user = getUserForAuthentication(authentication);
+    return new LoginResponse(accessToken, refreshToken, user);
+  }
 
-    return new LoginResponse(accessToken, refreshToken);
+  private User getUserForAuthentication(Authentication authentication) {
+    AuthenticatedUser authenticatedUser = (AuthenticatedUser) authentication.getPrincipal();
+    User user = new User();
+    assert authenticatedUser != null;
+    user.setId(authenticatedUser.getId());
+    user.setEmail(authenticatedUser.getUsername());
+    user.setDisplayName(authenticatedUser.getDisplayName());
+    user.setRole(authenticatedUser.getRole());
+    return user;
   }
 
   @Override
-  public OTPResponse forgotPassword(ForgotPasswordRequest request) {
+  public void forgotPassword(ForgotPasswordRequest request) {
     log.info("Processing forgot password request for email: {}", request.email());
     User user =
         userRepository
@@ -91,10 +102,9 @@ public class AuthServiceImpl implements AuthService {
     String otp = otpService.generateAndSaveOtp(request.email());
 
     Map<String, String> data = new HashMap<>();
-    data.put("FULL_NAME", user.getFullName());
+    data.put("FULL_NAME", user.getDisplayName());
     data.put("OTP_CODE", otp);
     emailService.sendHtmlEmail(request.email(), request.lang(), EmailType.OTP, data);
-    return new OTPResponse(otp);
   }
 
   @Override
@@ -117,7 +127,7 @@ public class AuthServiceImpl implements AuthService {
     user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
 
     Map<String, String> data = new HashMap<>();
-    data.put("FULL_NAME", user.getFullName());
+    data.put("FULL_NAME", user.getDisplayName());
     emailService.sendHtmlEmail(request.email(), request.lang(), EmailType.RESET_SUCCESS, data);
   }
 }

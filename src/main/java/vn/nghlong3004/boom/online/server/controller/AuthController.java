@@ -1,15 +1,14 @@
 package vn.nghlong3004.boom.online.server.controller;
 
-import com.vn.nghlong3004.boomonline.server.model.request.*;
-import vn.nghlong3004.boom.online.server.model.request.*;
-import vn.nghlong3004.boom.online.server.model.response.LoginResponse;
-import vn.nghlong3004.boom.online.server.model.response.OTPResponse;
-import vn.nghlong3004.boom.online.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vn.nghlong3004.boom.online.server.model.request.*;
+import vn.nghlong3004.boom.online.server.model.response.LoginResponse;
+import vn.nghlong3004.boom.online.server.model.response.OTPResponse;
+import vn.nghlong3004.boom.online.server.service.AuthService;
 
 /**
  * Project: boom-online-server
@@ -38,8 +37,8 @@ public class AuthController {
 
   @PostMapping(value = "/forgot-password", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public OTPResponse forgotPassword(@Validated @RequestBody ForgotPasswordRequest request) {
-    return authService.forgotPassword(request);
+  public void forgotPassword(@Validated @RequestBody ForgotPasswordRequest request) {
+    authService.forgotPassword(request);
   }
 
   @PostMapping(value = "/verify-otp", consumes = MediaType.APPLICATION_JSON_VALUE)

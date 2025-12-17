@@ -1,12 +1,12 @@
 package vn.nghlong3004.boom.online.server.repository.impl;
 
-import vn.nghlong3004.boom.online.server.model.OTPInfo;
-import vn.nghlong3004.boom.online.server.repository.OTPRepository;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import vn.nghlong3004.boom.online.server.model.OTPInfo;
+import vn.nghlong3004.boom.online.server.repository.OTPRepository;
 
 /**
  * Project: boom-online-server
@@ -15,9 +15,10 @@ import org.springframework.stereotype.Repository;
  * @since 12/9/2025
  */
 @Repository
+@RequiredArgsConstructor
 public class InMemoryOtpRepository implements OTPRepository {
 
-  private final Map<String, OTPInfo> storage = new ConcurrentHashMap<>();
+  private final Map<String, OTPInfo> storage;
 
   @Override
   public void saveOtp(String email, String otpCode, LocalDateTime expiryTime) {
