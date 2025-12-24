@@ -1,4 +1,4 @@
-package vn.nghlong3004.boom.online.server.service.email;
+package vn.nghlong3004.boom.online.server.email;
 
 /**
  * Project: boom-online-server

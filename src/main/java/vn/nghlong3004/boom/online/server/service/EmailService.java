@@ -1,7 +1,7 @@
 package vn.nghlong3004.boom.online.server.service;
 
-import vn.nghlong3004.boom.online.server.service.email.EmailType;
 import java.util.Map;
+import vn.nghlong3004.boom.online.server.email.EmailType;
 
 /**
  * Project: boom-online-server

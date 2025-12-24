@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.nghlong3004.boom.online.server.email.EmailType;
 import vn.nghlong3004.boom.online.server.exception.ErrorCode;
 import vn.nghlong3004.boom.online.server.exception.ResourceException;
 import vn.nghlong3004.boom.online.server.mapper.UserMapper;
@@ -26,7 +27,6 @@ import vn.nghlong3004.boom.online.server.service.AuthService;
 import vn.nghlong3004.boom.online.server.service.EmailService;
 import vn.nghlong3004.boom.online.server.service.OTPService;
 import vn.nghlong3004.boom.online.server.service.TokenService;
-import vn.nghlong3004.boom.online.server.service.email.EmailType;
 
 /**
  * Project: boom-online-server

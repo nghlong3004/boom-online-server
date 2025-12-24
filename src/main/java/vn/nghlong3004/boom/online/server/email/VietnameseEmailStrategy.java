@@ -1,7 +1,7 @@
-package vn.nghlong3004.boom.online.server.service.email;
+package vn.nghlong3004.boom.online.server.email;
 
-import vn.nghlong3004.boom.online.server.constant.LocaleConstant;
 import org.springframework.stereotype.Service;
+import vn.nghlong3004.boom.online.server.constant.LocaleConstant;
 
 /**
  * Project: boom-online-server

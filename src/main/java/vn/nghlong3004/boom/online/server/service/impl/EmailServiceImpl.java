@@ -1,9 +1,5 @@
 package vn.nghlong3004.boom.online.server.service.impl;
 
-import vn.nghlong3004.boom.online.server.constant.LocaleConstant;
-import vn.nghlong3004.boom.online.server.service.EmailService;
-import vn.nghlong3004.boom.online.server.service.email.EmailLocaleStrategy;
-import vn.nghlong3004.boom.online.server.service.email.EmailType;
 import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -15,6 +11,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import vn.nghlong3004.boom.online.server.constant.LocaleConstant;
+import vn.nghlong3004.boom.online.server.email.EmailLocaleStrategy;
+import vn.nghlong3004.boom.online.server.email.EmailType;
+import vn.nghlong3004.boom.online.server.service.EmailService;
 
 /**
  * Project: boom-online-server

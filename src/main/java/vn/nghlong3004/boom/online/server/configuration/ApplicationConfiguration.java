@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import vn.nghlong3004.boom.online.server.email.EmailLocaleStrategy;
 import vn.nghlong3004.boom.online.server.model.OTPInfo;
-import vn.nghlong3004.boom.online.server.service.email.EmailLocaleStrategy;
 
 /**
  * Project: boom-online-server
@@ -39,7 +39,7 @@ public class ApplicationConfiguration {
   }
 
   @Bean
-  public Map<String, OTPInfo> storage(){
+  public Map<String, OTPInfo> storage() {
     return new ConcurrentHashMap<>();
   }
 
