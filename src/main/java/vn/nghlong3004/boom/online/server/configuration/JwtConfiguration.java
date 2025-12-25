@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 /**
  * Project: boom-online-server
@@ -40,5 +41,10 @@ public class JwtConfiguration {
   @Bean
   public JwtDecoder jwtDecoder(SecretKey secretKey) {
     return NimbusJwtDecoder.withSecretKey(secretKey).build();
+  }
+
+  @Bean
+  public JwtAuthenticationConverter jwtAuthenticationConverter() {
+    return new JwtAuthenticationConverter();
   }
 }

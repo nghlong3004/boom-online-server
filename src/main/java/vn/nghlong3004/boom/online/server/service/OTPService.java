@@ -7,11 +7,11 @@ package vn.nghlong3004.boom.online.server.service;
  * @since 12/9/2025
  */
 public interface OTPService {
-  String generateAndSaveOtp(String email);
+  String createOTP(String email);
 
-  void validateOtp(String email, String OTPInput);
+  void verifyOTP(String email, String OTPInput);
 
-  String generateExchangeToken(String email);
+  String createExchangeToken(String email);
 
-  void validateToken(String token);
+  void verifyExchangeToken(String token);
 }
