@@ -1,9 +1,9 @@
 package vn.nghlong3004.boom.online.server.exception;
 
-import vn.nghlong3004.boom.online.server.model.response.ErrorResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import vn.nghlong3004.boom.online.server.model.response.ErrorResponse;
 
 /**
  * Project: boom-online-server
@@ -48,6 +48,16 @@ public enum ErrorCode {
   OTP_INCORRECT(HttpStatus.BAD_REQUEST.value(), "OtpIncorrect", "OTP code is incorrect."),
 
   TOKEN_INCORRECT(HttpStatus.BAD_REQUEST.value(), "TokenIncorrect", "Token is incorrect."),
+
+  TOKEN_EXPIRED(
+      HttpStatus.BAD_REQUEST.value(), "ExchangeTokenExpired", "Exchange token has expired"),
+
+  ROOM_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "RoomNotFound", "Room not found."),
+
+  ROOM_FULL(HttpStatus.CONFLICT.value(), "RoomFull", "The room is full."),
+
+  ROOM_PLAYING(
+      HttpStatus.CONFLICT.value(), "RoomPlaying", "The room is already playing, cannot join."),
 
   // 5xx
   INTERNAL_ERROR(

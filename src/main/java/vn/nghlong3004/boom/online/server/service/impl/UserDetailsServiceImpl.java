@@ -1,7 +1,5 @@
 package vn.nghlong3004.boom.online.server.service.impl;
 
-import vn.nghlong3004.boom.online.server.model.AuthenticatedUser;
-import vn.nghlong3004.boom.online.server.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
@@ -10,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import vn.nghlong3004.boom.online.server.model.AuthenticatedUser;
+import vn.nghlong3004.boom.online.server.repository.UserRepository;
 
 /**
  * Project: boom-online-server
@@ -33,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     return AuthenticatedUser.builder()
         .username(user.getEmail())
         .password(user.getPasswordHash())
+        .displayName(user.getDisplayName())
         .id(user.getId())
         .authorities(authorities)
         .build();

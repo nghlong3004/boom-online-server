@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.nghlong3004.boom.online.server.email.EmailType;
 import vn.nghlong3004.boom.online.server.exception.ErrorCode;
 import vn.nghlong3004.boom.online.server.exception.ResourceException;
 import vn.nghlong3004.boom.online.server.mapper.UserMapper;
@@ -26,7 +27,6 @@ import vn.nghlong3004.boom.online.server.service.AuthService;
 import vn.nghlong3004.boom.online.server.service.EmailService;
 import vn.nghlong3004.boom.online.server.service.OTPService;
 import vn.nghlong3004.boom.online.server.service.TokenService;
-import vn.nghlong3004.boom.online.server.service.email.EmailType;
 
 /**
  * Project: boom-online-server
@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
             .findByEmail(request.email())
             .orElseThrow(() -> new ResourceException(ErrorCode.EMAIL_INCORRECT));
 
-    String otp = otpService.generateAndSaveOtp(request.email());
+    String otp = otpService.createOTP(request.email());
 
     Map<String, String> data = new HashMap<>();
     data.put("FULL_NAME", user.getDisplayName());
@@ -110,15 +110,15 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public OTPResponse verifyOTP(OTPRequest request) {
     log.info("Processing verify OTP request for email: {}", request.email());
-    otpService.validateOtp(request.email(), request.OTP());
-    return new OTPResponse(otpService.generateExchangeToken(request.email()));
+    otpService.verifyOTP(request.email(), request.OTP());
+    return new OTPResponse(otpService.createExchangeToken(request.email()));
   }
 
   @Override
   @Transactional
   public void resetPassword(ResetPasswordRequest request) {
     log.info("Processing reset request for email: {}", request.email());
-    otpService.validateToken(request.token());
+    otpService.verifyExchangeToken(request.token());
     User user =
         userRepository
             .findByEmail(request.email())

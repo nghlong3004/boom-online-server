@@ -1,17 +1,16 @@
 package vn.nghlong3004.boom.online.server.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vn.nghlong3004.boom.online.server.model.OTPInfo;
-import vn.nghlong3004.boom.online.server.service.email.EmailLocaleStrategy;
+import vn.nghlong3004.boom.online.server.email.EmailLocaleStrategy;
 
 /**
  * Project: boom-online-server
@@ -33,18 +32,13 @@ public class ApplicationConfiguration {
   }
 
   @Bean
+  public ObjectMapper objectMapper(){
+    return new ObjectMapper();
+  }
+
+  @Bean
   public Map<String, EmailLocaleStrategy> emailStrategies(List<EmailLocaleStrategy> strategies) {
     return strategies.stream()
         .collect(Collectors.toMap(EmailLocaleStrategy::getSupportedLanguage, Function.identity()));
-  }
-
-  @Bean
-  public Map<String, OTPInfo> storage(){
-    return new ConcurrentHashMap<>();
-  }
-
-  @Bean
-  public Map<String, String> verificationTokens() {
-    return new ConcurrentHashMap<>();
   }
 }
